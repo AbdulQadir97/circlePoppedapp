@@ -1,0 +1,60 @@
+
+.wrapper{
+    max-width: 690px;
+    margin: 0 auto;
+}
+
+.blue {
+    color:#3f7abe;
+}
+
+h1{
+    margin: auto;
+    color: #212121;
+    text-transform: uppercase;
+    font-size: 30px;
+    
+}
+
+#dotContainer div{
+ 
+    height: 121px;
+    width: 119px;
+    text-align: center;
+    
+    font-size: 40px;
+    font-family: sans-serif, arial;
+    border-radius: 100%;
+    margin-top: 20px;
+    display: inline-block;
+    /* float: left; */
+    margin: 2.5px 5 px 2.5px 0px;
+}
+
+#green
+{
+    background-color: green; height: 121px;
+}
+#red
+{
+    background-color:red; 
+}
+#cyan
+{
+    background-color:cyan;
+}
+#yellow
+{
+    background-color: yellow
+}
+#gray
+{
+    background-color: gray
+}
+
+#compelteMessage {
+    display:none;
+    color:#ff3300;
+    font-size:100px;
+    
+}

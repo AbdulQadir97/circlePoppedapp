@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Pop the Ballons</title>
+</head>
+<body>
+    <div class="container bg-info">
+        <h4  id="display"></h4>
+        <h1 class="text-center" id="colorselect"></h1>
+        <h1 class = "font-weight-bold"id="lives"></h1>
+        <h1>Pop the balloons by moving your mouse over them</h1>
+        <h2 class="text-right font-weight-bold" id = "score"></h2>
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+    
+    <div class="wrapper">
+
+        <div id="compelteMessage"><span class="blue">Wow!</span> All balloons popped!</div>
+        <div id="dotContainer">
+            <div class="balloon" id="green" ></div>
+            <div class="balloon" id="red" ></div>
+            <div class="balloon" id="yellow" ></div>
+            <div class="balloon" id="cyan" ></div>  
+            <div class="balloon" id="gray" ></div>  
+       
+          
+
+            <div class="balloon" id="cyan" ></div>  
+            <div class="balloon" id="gray" ></div>  
+            <div class="balloon" id="green" ></div>
+            <div class="balloon" id="red" ></div>
+            <div class="balloon" id="yellow" ></div>
+       
+            <div class="balloon" id="red" ></div>
+            <div class="balloon" id="yellow" ></div>
+            <div class="balloon" id="cyan" ></div>  
+            <div class="balloon" id="green" ></div>
+            <div class="balloon" id="gray" ></div>  
+       
+          
+        </div>
+
+    </div>   
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script defer src="app.js"></script>
+</body>
+</html>
