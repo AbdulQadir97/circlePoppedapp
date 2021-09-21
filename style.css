@@ -52,9 +52,15 @@ h1{
     background-color: gray
 }
 
-#compelteMessage {
+#completeMessage{
     display:none;
     color:#ff3300;
     font-size:100px;
     
+}
+.textDecoration:hover
+{
+    text-decoration: none;
+    font-weight: bold;
+   
 }

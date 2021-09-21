@@ -10,19 +10,30 @@
     <link rel="stylesheet" href="style.css">
     <title>Pop the Ballons</title>
 </head>
-<body>
+<body onload="gameFunc()">
     <div class="container bg-info">
-        <h4  id="display"></h4>
+        <h4 id="display"></h4>
         <h1 class="text-center" id="colorselect"></h1>
-        <h1 class = "font-weight-bold"id="lives"></h1>
+        <div class="row">
+            <div class="col-6">
+                <h1 class="font-weight-bold" id="lives"></h1>
+            </div>
+    
+            <div class="col-6"><h2 class="text-right font-weight-bold" id="score"></h2></div>
+        </div>
         <h1>Pop the balloons by moving your mouse over them</h1>
-        <h2 class="text-right font-weight-bold" id = "score"></h2>
-        <button class="btn btn-danger" onclick="logout()">Logout</button>
+        <div class="row bg-dark p-2">
+            <!-- <div class="col-3"><button class="btn btn-lg btn-warning text-white" onclick="gameFunc()">Resume</button></div> -->
+            <div class="col-3"><button class="btn btn-lg btn-warning text-white" onclick="resetFunc()">Reset</button></div>
+            <!-- <div class="col-3"><button class="btn btn-lg btn-warning text-white" onclick="logout()">Pause</button></div> -->
+            <div class="col-3"><button class="btn btn-lg btn-danger text-white" onclick="logout()">Logout</button></div>
+        </div>
+        
     </div>
     
     <div class="wrapper">
 
-        <div id="compelteMessage"><span class="blue">Wow!</span> All balloons popped!</div>
+        <div id="completeMessage"><span class="blue">Wow!</span> All balloons popped!</div>
         <div id="dotContainer">
             <div class="balloon" id="green" ></div>
             <div class="balloon" id="red" ></div>

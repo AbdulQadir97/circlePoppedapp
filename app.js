@@ -13,19 +13,19 @@ const firebaseConfig = {
   let firebase_db = firebase.firestore();
 //Register
   async function signup() {
-      
+
     let useremail = document.getElementById('useremail').value
     let userpass = document.getElementById('userpassword').value
     try {
         await firebase.auth().createUserWithEmailAndPassword(useremail, userpass)
-        
+
         window.location = "./login.html"
     }
     catch (error) {
       console.log(error.message)
     }
   }
-  
+
 
 // LoginWithGoogle
   async function googleLogin() {
@@ -54,7 +54,7 @@ async function login() {
     }
     catch (error) {
       alert("Your Crediential are not valid, Kindly recheck your crediential")
-  
+
     }
   }
 
@@ -75,7 +75,7 @@ if (user !== null) {
       console.log("SignOUT")
     }
   });
-  
+
   // Loggng Out
 
   function logout() {
@@ -84,127 +84,112 @@ if (user !== null) {
       }).catch((error) => {
         console.log(error.message)    
     });
-    
-  }
-  
 
+  }
+
+//GAME 1 LEVEL
 
 let popped = 0;
 let livescount = 3;
 let chance = document.getElementById('lives')
 chance.textContent = 'lives: ' + livescount;
 let scorePoints = document.getElementById('score')
-function removeEvent(e){
-    e.target.removeEventListener('mouseover', function(){
-        
-    })
+scorePoints.textContent = `Score: ${popped}`
+
+function removeEvent(e) {
+  e.target.removeEventListener('mouseover', function () {
+
+  })
 };
 
-const score = ()=>{
-    if (popped > 140  ){
-        console.log('all popped!');
-        let details = document.querySelector('#dotContainer');
-        let message = document.querySelector('#completeMessage');
-        details.innerHTML = '';
-        message.style.display = 'block';
-        chance.textContent=""
-    }
+const score = () => {
+  if (popped > 150) {
+    console.log('all popped!');
+    let details = document.querySelector('#dotContainer');
+    let message = document.querySelector('#completeMessage');
+    details.innerHTML = '';
+    message.style.display = 'block';
+    chance.textContent = ""
+  }
 };
 
 
+const gameFunc = () => {
+  let popGiven = document.getElementById('colorselect');
+  let color = ['red', 'cyan', 'yellow', 'gray', 'green'];
+  let randomColor = 0;
+  
 
-let popGiven= document.getElementById('colorselect');
+  randomColor = Math.floor(Math.random() * color.length)
+  let interval = setInterval(() => {
 
-let color=['green','red','cyan','yellow','gray','green'];
+    popGiven.textContent = `Please select  ${color[randomColor+1]}  color`;
+    document.addEventListener('click', function (e) {
+      if (e.target.className === "balloon") {
 
-let counter = 0;
+        let idTarget = e.target;
+        console.log(idTarget.id)
+        console.log(color[randomColor] === idTarget.id)
 
+        if (color[randomColor] === idTarget.id) {
+          score()
+          e.target.style.backgroundColor = "#ededed";
+          e.target.style.backgroundColor = "#ededed";
+          e.target.textContent = "POP!";
+          popped = popped + 2
+          scorePoints.textContent = `Score: ${popped}`
+          removeEvent(e);
 
-let interval = setInterval(function(){
-     
-popGiven.textContent = `Please select  ${color[counter+1]}  color`;
-
-console.log(color[counter])
-document.addEventListener('mouseover', function(e){
-    
-    if (e.target.className === "balloon"){
-            
-           let idTarget = e.target;
-           console.log(idTarget.id);
-           console.log(color[counter])
-      if (color[counter]=="red" &&  idTarget.id=="red"){
-                score()
-                e.target.style.backgroundColor = "#ededed";
-                e.target.style.backgroundColor = "#ededed";
-                e.target.textContent = "POP!";
-                popped+=10;
-                scorePoints.textContent = `Score: ${popped}`
-                removeEvent(e);
         }
-   else  if (color[counter]=="green" &&  idTarget.id=="green"){
-                score()
-         e.target.style.backgroundColor = "#ededed";
-         e.target.style.backgroundColor = "#ededed";
-         e.target.textContent = "POP!";
-         popped+=10;
-         scorePoints.textContent = `Score: ${popped}`
-         removeEvent(e);
-     
-}
-    else if (color[counter]=="cyan" &&  idTarget.id=="cyan"){
-        score()
-     e.target.style.backgroundColor = "#ededed";
-     e.target.style.backgroundColor = "#ededed";
-     e.target.textContent = "POP!";
-     popped+=10;
-     scorePoints.textContent = `Score: ${popped}`
-     removeEvent(e);
-     
-}
 
-     else if (color[counter]=="yellow" &&  idTarget.id=="yellow"){
-        score()
-     e.target.style.backgroundColor = "#ededed";
-     e.target.style.backgroundColor = "#ededed";
-     e.target.textContent = "POP!";
-     popped+=10;
-     scorePoints.textContent = `Score: ${popped}`
-     removeEvent(e);
-     
-}
-     else if (color[counter]=="gray" &&  idTarget.id=="gray"){
-        score()
-     e.target.style.backgroundColor = "#ededed";
-     e.target.style.backgroundColor = "#ededed";
-     e.target.textContent = "POP!";
-     popped+=10;
-     scorePoints.textContent = `Score: ${popped}`
-     removeEvent(e);
-     
-}
- 
-      else ( 
-     livescount--
-     
-     );
-     lives.textContent = 'lives: ' + (+livescount)
+        else {
+          chance.textContent = 'lives: ' + --livescount
+          if (livescount === 0) {
 
+            let clearScreen = document.querySelector('#dotContainer');
+            clearScreen.innerHTML = '';
+            clearInterval(interval);
+            popGiven.textContent = 'GAME OVER!'
+          }
+
+        };
+      }
+    }
+    );
+
+    randomColor++; //increament in Color randomly
+
+    if (popped < 90 && randomColor == color.length) {
+      randomColor = 0;
+      setInterval(interval);
+     
 
     }
-    }   
-);
+    else if (popped >= 90) {
 
-
-
-    counter++;
-    if(counter == color.length || livescount < 1) {
-     
-        let clearScreen = document.querySelector('#dotContainer');
-        clearScreen.innerHTML = '';
-        clearInterval(interval);
-        popGiven.textContent = 'GAME OVER'
+      let clearScreen = document.querySelector('#dotContainer');
+      clearScreen.innerHTML = '';
+      clearInterval(interval);
+      popGiven.textContent = 'CONGRATS! You Played Well, ALL POPPED'
     }
-},5000)
+    else if (randomColor == color.length && popped >= 44) {
+
+      let clearScreen = document.querySelector('#dotContainer');
+      clearScreen.innerHTML = '';
+      clearInterval(interval);
+      popGiven.textContent = 'CONGRATS! You Played Well, BUT NOT ALL POPPED'
+    }
+    else if (randomColor == color.length && popped < 40) {
+
+      let clearScreen = document.querySelector('#dotContainer');
+      clearScreen.innerHTML = '';
+      clearInterval(interval);
+      popGiven.textContent = 'Sorry!'
+    }
+
+  }, 6000)
+}
+
 
 
 
