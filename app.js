@@ -11,81 +11,80 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   let firebase_db = firebase.firestore();
-//Register
-  async function signup() {
-
-    let useremail = document.getElementById('useremail').value
-    let userpass = document.getElementById('userpassword').value
-    try {
-        await firebase.auth().createUserWithEmailAndPassword(useremail, userpass)
-
-        window.location = "./login.html"
-    }
-    catch (error) {
-      console.log(error.message)
-    }
+// //Register
+async function signup() {
+  let username = document.getElementById('username').value
+  let useremail = document.getElementById('useremail').value
+  let userpass = document.getElementById('userpassword').value
+  //let usercontact = document.getElementById('userphnno').value
+  //console.log(usercontact)
+  //usercontact.toString()
+  try {
+      await firebase.auth().createUserWithEmailAndPassword(useremail, userpass)
+      const user = await firebase.auth().currentUser
+      if(user !== null)
+      {
+        user.updateProfile(
+          {
+            displayName: username,
+          }
+        )
+      }
+      console.log(user.displayName)
+     window.location = "./login.html"
   }
-
-
-// LoginWithGoogle
-  async function googleLogin() {
-    try {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    let googleLogin = await firebase.auth().signInWithPopup(provider)
-    console.log(googleLogin)
-    window.location = "./profile.html"    
-    }
-    catch(error)
-    {
-
-       alert(error.message)
-
-    }
+  catch (error) {
+    console.log(error.message)
+  }
 }
 
-//LoginWithEmail&Password
-
+// Login
 async function login() {
-    let loggeduseremail = document.getElementById('loggeduseremail').value
-    let loggeduserpass = document.getElementById('loggeduserpass').value
-    try {
-      let loginResult = await firebase.auth().signInWithEmailAndPassword(loggeduseremail, loggeduserpass)
-      window.location = "./profile.html"
-    }
-    catch (error) {
-      alert("Your Crediential are not valid, Kindly recheck your crediential")
-
-    }
+  let loggeduseremail = document.getElementById('loggeduseremail').value
+  let loggeduserpass = document.getElementById('loggeduserpass').value
+  try {
+    let loginResult = await firebase.auth().signInWithEmailAndPassword(loggeduseremail, loggeduserpass)
+    
+   window.location = "./profile.html"
   }
+  catch (error) {
+    alert("Your Crediential are not valid, Kindly recheck your crediential")
 
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        const user = firebase.auth().currentUser;
-
-if (user !== null) {
-  user.providerData.forEach((profile) => {
-
-    document.getElementById('display').innerText = `  Welcome  ${ profile.displayName}`;
-
-  });
+  }
 }
-        console.log("ALIVE!")
-    } 
-    else {
-      console.log("SignOUT")
-    }
-  });
 
-  // Loggng Out
+// // Subscriber/collection
 
-  function logout() {
-    firebase.auth().signOut().then(() => {
-        window.location = "./login.html"
-      }).catch((error) => {
-        console.log(error.message)    
-    });
-
+firebase.auth().onAuthStateChanged((user) => {
+  user = firebase.auth().currentUser
+  if (user !== null ) {
+    firebase_db.collection('users').doc(user.uid).set({
+    username: user.displayName,
+    userid: user.uid,
+    useremail: user.email,
+  
+    })
+    retrieveData(user)
+    
+  } 
+  else {
+    console.log("SignOUT")
   }
+});
+
+function logout() {
+  firebase.auth().signOut();
+  window.location = './login.html'
+}
+
+const retrieveData = (user) => {
+  firebase_db.collection('users').doc(user.uid).get().then((querySnapshot) => {
+      const data = querySnapshot.data();
+      console.log(data)
+      document.getElementById('display').innerHTML = "Welcome " + data.username
+  })
+}
+
 
 //GAME 1 LEVEL
 
@@ -124,12 +123,13 @@ const gameFunc = () => {
   let interval = setInterval(() => {
 
     popGiven.textContent = `Please select  ${color[randomColor+1]}  color`;
-    document.addEventListener('click', function (e) {
+    //console.log(color[randomColor])
+    document.addEventListener('mouseover', function (e) {
       if (e.target.className === "balloon") {
 
         let idTarget = e.target;
-        console.log(idTarget.id)
-        console.log(color[randomColor] === idTarget.id)
+       // console.log(idTarget.id)
+        //onsole.log(color[randomColor] === idTarget.id)
 
         if (color[randomColor] === idTarget.id) {
           score()
@@ -161,7 +161,7 @@ const gameFunc = () => {
 
     if (popped < 90 && randomColor == color.length) {
       randomColor = 0;
-      setInterval(interval);
+      setInterval(interval,800);
      
 
     }
